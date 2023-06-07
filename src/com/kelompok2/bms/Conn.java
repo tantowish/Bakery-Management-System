@@ -72,15 +72,14 @@ public class Conn {
             System.out.println("" + ex);
         }
     }
-    public static boolean checkUser(String username, String password, String type) {
+    public static boolean checkUser(String username, String password) {
         try {
             Connection connection = getCon();
             if (connection != null) {
-                String query = "SELECT * FROM account WHERE username = ? AND password = ? AND type = ?";
+                String query = "SELECT * FROM account WHERE username = ? AND password = ?";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setString(1, username);
                 statement.setString(2, password);
-                statement.setString(3, type);
                 ResultSet resultSet = statement.executeQuery();
 
                 // Check if a user with the given username and password exists
@@ -219,5 +218,34 @@ public class Conn {
             e.printStackTrace();
         }
         return count;
+    }
+    public static String checkType(String id) {
+        String type="";
+        try {
+            // Establish the database connection
+            Connection connection = Conn.getCon();
+            // Create the SQL query
+            String query = "SELECT type FROM account WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, id);
+
+            // Execute the query
+            ResultSet resultSet = statement.executeQuery();
+
+            // Process the query results
+            if (resultSet.next()) {
+                type = resultSet.getString("type");
+            }
+
+            // Close the connections and resources
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        // Combine firstName and lastName into a single variable
+
+        return type;
     }
 }

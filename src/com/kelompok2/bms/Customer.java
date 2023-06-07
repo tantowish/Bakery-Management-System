@@ -3,6 +3,8 @@ package com.kelompok2.bms;
 import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 public class Customer extends Account{
@@ -39,4 +41,5 @@ public class Customer extends Account{
             JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+
 }

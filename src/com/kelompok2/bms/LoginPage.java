@@ -28,13 +28,12 @@ public class LoginPage extends JDialog{
             public void actionPerformed(ActionEvent e) {
                 String username = textField1.getText();
                 String password = passwordField1.getText();
-                String type = comboBox1.getSelectedItem().toString();
-                if(username.isEmpty() || password.isEmpty()||type.equals("Select")){
+                if(username.isEmpty() || password.isEmpty()){
                     JOptionPane.showMessageDialog(rootPane,"Some Fields Are Empty","Erorr",1);
                 }
                 else{
-                    if(Conn.checkUser(username,password,type)){
-                        if(type.equals("admin")){
+                    if(Conn.checkUser(username,password)){
+                        if( Conn.checkType(Conn.getId(username)).equals("admin")){
                             JOptionPane.showMessageDialog(rootPane,"Berhasil login sebagai admin","Logged",1);
                             dispose();
                             MenuAdmin menuPageAdmin = new MenuAdmin(LoginPage.this);
