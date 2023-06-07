@@ -92,42 +92,60 @@ public class RestockPage extends JDialog{
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    // Get the database connection from another class
-                    Connection conn = Conn.getCon();
-                    Statement stmt = conn.createStatement();
+                boolean allStocksZero = true;
+                boolean atLeastOneStockNonZero = false;
 
-                    for (int i = 0; i < daftar.length; i++) {
-                        String productName = daftar[i].getName();
-                        int currentStock = daftar[i].getStock();
+                for (int i = 0; i < daftar.length; i++) {
+                    String stockValue = getTextFieldValue(i + 1);
 
-                        // Get the value from the corresponding JTextField
-                        int stockToAdd = Integer.parseInt(getTextFieldValue(i + 1));
-
-                        // Calculate the new stock
-                        int newStock = currentStock + stockToAdd;
-
-                        // Update the stock in the database
-                        String updateQuery = "UPDATE products SET stock = " + newStock + " WHERE productId ="+i;
-
-                        stmt.executeUpdate(updateQuery);
-
-                        // Update the stock in the daftar array
-                        daftar[i].setStock(newStock);
-
-                        // Update the JLabel to display the updated stock
-                        updateStockLabel(i + 1, newStock);
+                    // Check if the stock value is "0"
+                    if (!stockValue.equals("0")) {
+                        allStocksZero = false;
+                        atLeastOneStockNonZero = true;
+                        break;
                     }
+                }
 
-                    // Print the updated data for verification
-                    for (Menu menu : daftar) {
-                        System.out.println(menu);
+                if (allStocksZero) {
+                    JOptionPane.showMessageDialog(RestockPage.this, "Please fill in at least one non-zero stock.");
+                } else if (atLeastOneStockNonZero) {
+                    try {
+                        // Get the database connection from another class
+                        Connection conn = Conn.getCon();
+                        Statement stmt = conn.createStatement();
+
+                        for (int i = 0; i < daftar.length; i++) {
+                            String productName = daftar[i].getName();
+                            int currentStock = daftar[i].getStock();
+
+                            // Get the value from the corresponding JTextField
+                            int stockToAdd = Integer.parseInt(getTextFieldValue(i + 1));
+
+                            // Calculate the new stock
+                            int newStock = currentStock + stockToAdd;
+
+                            // Update the stock in the database
+                            String updateQuery = "UPDATE products SET stock = " + newStock + " WHERE productId ="+i;
+
+                            stmt.executeUpdate(updateQuery);
+
+                            // Update the stock in the daftar array
+                            daftar[i].setStock(newStock);
+
+                            // Update the JLabel to display the updated stock
+                            updateStockLabel(i + 1, newStock);
+                        }
+
+                        // Print the updated data for verification
+                        for (Menu menu : daftar) {
+                            System.out.println(menu);
+                        }
+
+                        JOptionPane.showMessageDialog(RestockPage.this, "Stock added successfully.");
+                        stockZero();
+                    } catch (SQLException ex) {
+                        ex.printStackTrace();
                     }
-
-                    JOptionPane.showMessageDialog(RestockPage.this, "Stock added successfully.");
-                    stockZero();
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
                 }
             }
         });
@@ -194,6 +212,7 @@ public class RestockPage extends JDialog{
                 break;
         }
     }
+
     public void stockZero(){
         textField1.setText("0");
         textField2.setText("0");
