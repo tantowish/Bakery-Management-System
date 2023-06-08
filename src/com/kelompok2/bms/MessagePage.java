@@ -64,7 +64,7 @@ public class MessagePage extends JDialog{
 
         try {
             Connection conn = Conn.getCon();
-            String selectChatSQL = "SELECT sender, SUM(CASE WHEN read_status = 0 THEN 1 ELSE 0 END) AS unread_count FROM chat WHERE receiver = ? OR receiver LIKE 'A%' GROUP BY sender";
+            String selectChatSQL = "SELECT sender, SUM(CASE WHEN read_status = 0 THEN 1 ELSE 0 END) AS unread_count FROM chat WHERE receiver = ? OR receiver LIKE 'A%' GROUP BY sender ORDER BY unread_count desc";
             PreparedStatement preparedStatement = conn.prepareStatement(selectChatSQL);
             preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
