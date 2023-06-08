@@ -11,8 +11,9 @@ public class MenuAdmin extends JDialog{
     private JButton laporanMingguanButton;
     private JPanel MenuAdmin;
     private JButton backButton;
+    private JButton chatCustomerButton;
 
-    public MenuAdmin(LoginPage loginPage) {
+    public MenuAdmin(LoginPage loginPage, String id) {
         super(loginPage);
         setTitle("Menu Admin");
         setContentPane(MenuAdmin);
@@ -34,7 +35,7 @@ public class MenuAdmin extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                RestockPage restockPage = new RestockPage(loginPage);
+                RestockPage restockPage = new RestockPage(loginPage,id);
                 restockPage.setVisible(true);
             }
         });
@@ -50,8 +51,16 @@ public class MenuAdmin extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                OrderPage orderPage = new OrderPage(loginPage);
+                OrderPage orderPage = new OrderPage(loginPage,id);
                 orderPage.setVisible(true);
+            }
+        });
+        chatCustomerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                MessagePage messagePage = new MessagePage(loginPage,id);
+                messagePage.setVisible(true);
             }
         });
     }

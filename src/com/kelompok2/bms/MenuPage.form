@@ -369,7 +369,7 @@
           </grid>
         </constraints>
         <properties>
-          <text value="Logout"/>
+          <text value="Back"/>
         </properties>
       </component>
       <component id="c0944" class="javax.swing.JButton" binding="statusButton" default-binding="true">

@@ -338,8 +338,8 @@ public class MenuPage extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                LoginPage loginPage2 = new LoginPage(loginPage);
-                loginPage2.setVisible(true);
+                MenuUser menuUser = new MenuUser(loginPage,id);
+                menuUser.setVisible(true);
             }
         });
     }

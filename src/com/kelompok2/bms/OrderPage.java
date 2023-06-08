@@ -19,7 +19,7 @@ public class OrderPage extends JDialog {
     private JButton checkDetailsButton;
     DefaultTableModel tableModel;
 
-    public OrderPage(LoginPage loginPage) {
+    public OrderPage(LoginPage loginPage, String id) {
         super(loginPage);
         setTitle("Register");
         setContentPane(orderPanel);
@@ -49,7 +49,7 @@ public class OrderPage extends JDialog {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                MenuAdmin menuAdmin = new MenuAdmin(loginPage);
+                MenuAdmin menuAdmin = new MenuAdmin(loginPage,id);
                 menuAdmin.setVisible(true);
             }
         });

@@ -36,15 +36,16 @@ public class LoginPage extends JDialog{
                         if( Conn.checkType(Conn.getId(username)).equals("admin")){
                             JOptionPane.showMessageDialog(rootPane,"Berhasil login sebagai admin","Logged",1);
                             dispose();
-                            MenuAdmin menuPageAdmin = new MenuAdmin(LoginPage.this);
+                            String id = Conn.getId(username);
+                            MenuAdmin menuPageAdmin = new MenuAdmin(LoginPage.this,id);
                             menuPageAdmin.setVisible(true);
                         }
                         else{
                             JOptionPane.showMessageDialog(rootPane,"Berhasil login sebagai customer","Logged",1);
                             dispose();
                             String id = Conn.getId(username);
-                            MenuPage menuPageUser = new MenuPage(LoginPage.this,id);
-                            menuPageUser.setVisible(true);
+                            MenuUser menuUser = new MenuUser(LoginPage.this,id);
+                            menuUser.setVisible(true);
                         }
                     }
                     else{

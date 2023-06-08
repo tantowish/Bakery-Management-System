@@ -248,4 +248,35 @@ public class Conn {
 
         return type;
     }
+    public static String getFirstName(String id){
+        String firstName="";
+
+        try {
+            // Establish the database connection
+            Connection connection = getCon();
+            // Create the SQL query
+            String query = "SELECT firstName, lastName FROM account WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, id);
+
+            // Execute the query
+            ResultSet resultSet = statement.executeQuery();
+
+            // Process the query results
+            if (resultSet.next()) {
+                firstName = resultSet.getString("firstName");
+            }
+
+            // Close the connections and resources
+            resultSet.close();
+            statement.close();
+            connection.close();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        // Combine firstName and lastName into a single variable
+        String fullName = firstName;
+
+        return fullName;
+    }
 }

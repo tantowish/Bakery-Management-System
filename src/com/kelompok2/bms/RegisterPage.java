@@ -12,6 +12,7 @@ public class RegisterPage extends JDialog{
     private JTextField textField2;
     private JTextField textField3;
     private JPasswordField passwordField1;
+    private JComboBox comboBox1;
     private JPanel registerPanel;
     private JButton registerButton;
     private JButton cancelButton;
@@ -34,26 +35,26 @@ public class RegisterPage extends JDialog{
                 String lastName = textField2.getText();
                 String username = textField3.getText();
                 String password = passwordField1.getText();
+                String type = comboBox1.getSelectedItem().toString();
 
-                if (id.isEmpty() || firstName.isEmpty() || username.isEmpty() || password.isEmpty()) {
+                if (id.isEmpty() || firstName.isEmpty() || username.isEmpty() || password.isEmpty() || type.equals("Select")) {
                     JOptionPane.showMessageDialog(rootPane, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 Account account;
-                if (username.equalsIgnoreCase("admin")) {
+                if (type.equalsIgnoreCase("admin")) {
                     account = new Admin(firstName,lastName,username,password,'A'+id);
-                    account.saveToDatabase("admin");
                 }
                 else{
                     account = new Customer(firstName,lastName,username,password,'C'+id);
-                    account.saveToDatabase("user");
                 }
-
+                account.saveToDatabase(type);
                 textField1.setText("");
                 textField2.setText("");
                 textField3.setText("");
                 textField4.setText("");
                 passwordField1.setText("");
+                comboBox1.setSelectedIndex(0);
             }
         });
 

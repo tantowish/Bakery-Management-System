@@ -31,7 +31,7 @@ public class RestockPage extends JDialog{
     private JPanel restockPanel;
     private JButton backButton;
     private Menu[] daftar = new Menu[8];
-    public RestockPage(LoginPage loginPage) {
+    public RestockPage(LoginPage loginPage, String id) {
         super(loginPage);
         setTitle("Restock");
         setContentPane(restockPanel);
@@ -154,7 +154,7 @@ public class RestockPage extends JDialog{
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
-                MenuAdmin menuPageAdmin = new MenuAdmin(loginPage);
+                MenuAdmin menuPageAdmin = new MenuAdmin(loginPage, id);
                 menuPageAdmin.setVisible(true);
             }
         });
