@@ -279,4 +279,27 @@ public class Conn {
 
         return fullName;
     }
+
+    public static boolean isUsernameExists(String username) {
+        try {
+            Connection connection = getCon();
+
+            String query = "SELECT COUNT(*) FROM account WHERE username = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setString(1, username);
+
+            ResultSet resultSet = statement.executeQuery();
+            resultSet.next();
+            int count = resultSet.getInt(1);
+
+            statement.close();
+            connection.close();
+
+            return count > 0;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return false;
+    }
 }

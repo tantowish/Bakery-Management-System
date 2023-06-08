@@ -64,7 +64,8 @@ public class ChatUser extends JDialog {
             Connection conn = Conn.getCon();
 
             // Prepare the select statement
-            String selectMessagesSQL = "SELECT sender, message, read_status FROM chat WHERE (sender = ? AND (receiver = ? OR receiver LIKE 'A%')) OR (sender = ? AND (receiver = ? OR receiver LIKE 'A%'))";
+            String selectMessagesSQL = "SELECT sender, message, read_status FROM chat WHERE (sender = ? AND (receiver = ? OR receiver LIKE 'A%')) OR ((sender = ? OR sender LIKE 'A%') AND receiver = ?)";
+
             PreparedStatement preparedStatement = conn.prepareStatement(selectMessagesSQL);
             preparedStatement.setString(1, id);
             preparedStatement.setString(2, "admin");

@@ -41,14 +41,20 @@ public class RegisterPage extends JDialog{
                     JOptionPane.showMessageDialog(rootPane, "Please fill in all fields.", "Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
-                Account account;
-                if (type.equalsIgnoreCase("admin")) {
-                    account = new Admin(firstName,lastName,username,password,'A'+id);
+                if(Conn.isUsernameExists(username)){
+                    JOptionPane.showMessageDialog(rootPane, "Username already exists.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 else{
-                    account = new Customer(firstName,lastName,username,password,'C'+id);
+                    Account account;
+                    if (type.equalsIgnoreCase("admin")) {
+                        account = new Admin(firstName,lastName,username,password,'A'+id);
+                    }
+                    else{
+                        account = new Customer(firstName,lastName,username,password,'C'+id);
+                    }
+                    account.saveToDatabase(type);
                 }
-                account.saveToDatabase(type);
+
                 textField1.setText("");
                 textField2.setText("");
                 textField3.setText("");

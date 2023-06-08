@@ -131,7 +131,7 @@
           <model>
             <item value="Select"/>
             <item value="admin"/>
-            <item value="customer"/>
+            <item value="user"/>
           </model>
         </properties>
       </component>

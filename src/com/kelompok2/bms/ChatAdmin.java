@@ -62,7 +62,7 @@ public class ChatAdmin extends JDialog{
             Connection conn = Conn.getCon();
 
             // Prepare the select statement
-            String selectMessagesSQL = "SELECT sender, message, receiver FROM chat WHERE sender = ? OR receiver = ?";
+            String selectMessagesSQL = "SELECT sender, message, receiver FROM chat WHERE (sender = ? OR sender LIKE 'A%') OR receiver = ?";
             PreparedStatement preparedStatement = conn.prepareStatement(selectMessagesSQL);
             preparedStatement.setString(1, "admin");
             preparedStatement.setString(2, "admin");
