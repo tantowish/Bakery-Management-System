@@ -18,6 +18,7 @@
         </constraints>
         <properties>
           <background color="-1121862"/>
+          <font size="13"/>
           <foreground color="-7778753"/>
           <gridColor color="-3966624"/>
           <selectionBackground color="-3966624"/>

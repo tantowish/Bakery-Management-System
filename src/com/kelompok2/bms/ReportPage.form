@@ -23,6 +23,7 @@
           <component id="b8891" class="javax.swing.JTable" binding="table1" default-binding="true">
             <constraints/>
             <properties>
+              <background color="-1121862"/>
               <foreground color="-7778753"/>
               <gridColor color="-3966624"/>
               <selectionBackground color="-7778753"/>
@@ -44,6 +45,7 @@
           <component id="44b9d" class="javax.swing.JTable" binding="table2" default-binding="true">
             <constraints/>
             <properties>
+              <background color="-1121862"/>
               <foreground color="-7778753"/>
               <gridColor color="-3966624"/>
               <selectionBackground color="-7778753"/>
