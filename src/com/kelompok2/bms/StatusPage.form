@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
-    <properties/>
+    <properties>
+      <foreground color="-7778753"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="109f5" class="javax.swing.JTable" binding="statusTable">
@@ -14,7 +16,13 @@
             <preferred-size width="150" height="50"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-1121862"/>
+          <foreground color="-7778753"/>
+          <gridColor color="-3966624"/>
+          <selectionBackground color="-3966624"/>
+          <selectionForeground color="-1121862"/>
+        </properties>
       </component>
     </children>
   </grid>

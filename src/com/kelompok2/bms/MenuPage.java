@@ -39,6 +39,7 @@ public class MenuPage extends JDialog {
     private JButton resetButton;
     private JButton statusButton;
     private JButton logoutButton;
+    private JScrollPane spane;
     private static int tableCounter = 1;
     private static int total;
     private Menu daftar[] = new Menu[8];
@@ -59,6 +60,7 @@ public class MenuPage extends JDialog {
         JSpinner[] spinners = {spinner1, spinner3, spinner5, spinner7, spinner2, spinner4, spinner6, spinner8};
 
         loadMenu();
+        spane.setBackground(new Color(238, 225, 186));
 
         addButton.addActionListener(new ActionListener() {
             @Override

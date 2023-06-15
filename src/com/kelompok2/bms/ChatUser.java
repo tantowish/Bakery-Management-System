@@ -27,7 +27,7 @@ public class ChatUser extends JDialog {
             public void actionPerformed(ActionEvent e) {
                 String message = textField1.getText();
                 if (!message.isEmpty()) {
-                    textArea1.append("me: " + message + "\n");
+                    textArea1.append("me : " + message + "\n");
                     textField1.setText("");
                     saveMessage(id, message);
                 }
@@ -81,9 +81,9 @@ public class ChatUser extends JDialog {
                 String message = resultSet.getString("message");
                 int readStatus = resultSet.getInt("read_status");
                 if (sender.equals(id)) {
-                    textArea1.append("me: " + message + "\n");
+                    textArea1.append("me : " + message + "\n");
                 } else {
-                    textArea1.append("admin: " + message + "\n");
+                    textArea1.append("admin : " + message + "\n");
                     if (readStatus == 0) {
                         // Update read_status to 1 for messages received from admin
                         updateReadStatus(id, sender);

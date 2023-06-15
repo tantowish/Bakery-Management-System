@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-1121862"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="afa08" class="javax.swing.JLabel">
@@ -13,6 +15,7 @@
           <grid row="0" column="1" row-span="1" col-span="4" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-3966624"/>
           <font name="Baloo 2 ExtraBold" size="36" style="1"/>
           <text value="Register"/>
         </properties>
@@ -22,6 +25,7 @@
           <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-3966624"/>
           <text value="First Name"/>
         </properties>
       </component>
@@ -30,6 +34,7 @@
           <grid row="3" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-3966624"/>
           <text value="Last Name"/>
         </properties>
       </component>
@@ -38,6 +43,7 @@
           <grid row="4" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-3966624"/>
           <text value="Username"/>
         </properties>
       </component>
@@ -47,7 +53,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <foreground color="-7778753"/>
+        </properties>
       </component>
       <component id="916b5" class="javax.swing.JTextField" binding="textField2" default-binding="true">
         <constraints>
@@ -55,7 +63,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <foreground color="-7778753"/>
+        </properties>
       </component>
       <component id="7b6f8" class="javax.swing.JTextField" binding="textField3" default-binding="true">
         <constraints>
@@ -63,7 +73,9 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <foreground color="-7778753"/>
+        </properties>
       </component>
       <component id="d3078" class="javax.swing.JPasswordField" binding="passwordField1" default-binding="true">
         <constraints>
@@ -71,13 +83,16 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <foreground color="-7778753"/>
+        </properties>
       </component>
       <component id="b5fb6" class="javax.swing.JLabel">
         <constraints>
           <grid row="5" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-3966624"/>
           <text value="Password"/>
         </properties>
       </component>
@@ -86,6 +101,8 @@
           <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-7778753"/>
+          <foreground color="-1121862"/>
           <text value="Register"/>
         </properties>
       </component>
@@ -94,6 +111,8 @@
           <grid row="7" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-7778753"/>
+          <foreground color="-1121862"/>
           <text value="Back"/>
         </properties>
       </component>
@@ -112,6 +131,7 @@
           <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-3966624"/>
           <text value="id"/>
         </properties>
       </component>
@@ -121,13 +141,17 @@
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <foreground color="-7778753"/>
+        </properties>
       </component>
       <component id="4ae9c" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
         <constraints>
           <grid row="6" column="3" row-span="1" col-span="2" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-7778753"/>
+          <foreground color="-1121862"/>
           <model>
             <item value="Select"/>
             <item value="admin"/>
@@ -140,6 +164,7 @@
           <grid row="6" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-3966624"/>
           <text value="Type"/>
         </properties>
       </component>

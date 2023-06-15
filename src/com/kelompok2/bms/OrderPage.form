@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-1121862"/>
+    </properties>
     <border type="none"/>
     <children>
       <component id="689e1" class="javax.swing.JLabel">
@@ -14,6 +16,7 @@
         </constraints>
         <properties>
           <font name="Baloo 2 ExtraBold" size="28" style="0"/>
+          <foreground color="-7778753"/>
           <text value="OrderPage"/>
         </properties>
       </component>
@@ -22,6 +25,8 @@
           <grid row="6" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-7778753"/>
+          <foreground color="-1121862"/>
           <text value="Update"/>
         </properties>
       </component>
@@ -30,6 +35,8 @@
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-7778753"/>
+          <foreground color="-1121862"/>
           <model>
             <item value="Select"/>
             <item value="paid"/>
@@ -42,12 +49,20 @@
         <constraints>
           <grid row="3" column="1" row-span="2" col-span="2" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
-        <properties/>
+        <properties>
+          <background color="-3966624"/>
+          <foreground color="-1121862"/>
+        </properties>
         <border type="none"/>
         <children>
           <component id="1a668" class="javax.swing.JTable" binding="table1" default-binding="true">
             <constraints/>
-            <properties/>
+            <properties>
+              <foreground color="-7778753"/>
+              <gridColor color="-3966624"/>
+              <selectionBackground color="-3966624"/>
+              <selectionForeground color="-1121862"/>
+            </properties>
           </component>
         </children>
       </scrollpane>
@@ -56,6 +71,8 @@
           <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-7778753"/>
+          <foreground color="-1121862"/>
           <text value="Back"/>
         </properties>
       </component>
@@ -72,6 +89,8 @@
           <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-7778753"/>
+          <foreground color="-1121862"/>
           <text value="Search"/>
         </properties>
       </component>
@@ -80,6 +99,8 @@
           <grid row="5" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-7778753"/>
+          <foreground color="-1121862"/>
           <text value="Check details"/>
         </properties>
       </component>

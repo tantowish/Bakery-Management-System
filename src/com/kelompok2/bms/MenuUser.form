@@ -5,7 +5,9 @@
     <constraints>
       <xy x="20" y="20" width="500" height="460"/>
     </constraints>
-    <properties/>
+    <properties>
+      <background color="-1121862"/>
+    </properties>
     <border type="none"/>
     <children>
       <hspacer id="ba636">
@@ -40,6 +42,7 @@
         </constraints>
         <properties>
           <font name="Baloo 2 ExtraBold" size="28" style="1"/>
+          <foreground color="-7778753"/>
           <text value="Menu User"/>
         </properties>
       </component>
@@ -99,6 +102,8 @@
           <grid row="5" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-7778753"/>
+          <foreground color="-1121862"/>
           <text value="Order"/>
         </properties>
       </component>
@@ -107,6 +112,8 @@
           <grid row="7" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-7778753"/>
+          <foreground color="-1121862"/>
           <text value="Chat Admin"/>
         </properties>
       </component>
@@ -115,6 +122,8 @@
           <grid row="9" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
+          <background color="-7778753"/>
+          <foreground color="-1121862"/>
           <text value="Logout"/>
         </properties>
       </component>

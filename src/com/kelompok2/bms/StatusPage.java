@@ -13,6 +13,8 @@ public class StatusPage extends JDialog{
         super(loginPage);
         setTitle("Order Table");
         setModal(true);
+        setContentPane(statusPanel);
+        setMinimumSize(new Dimension(300, 400));
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(loginPage);
@@ -51,20 +53,10 @@ public class StatusPage extends JDialog{
         }
 
         // Create the order table with the populated table model
-        statusTable = new JTable(tableModel);
-        statusTable.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-        statusTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        statusTable.setFillsViewportHeight(true);
+        statusTable.setModel(tableModel);
 
-        // Create a panel to hold the table
-        statusPanel = new JPanel(new BorderLayout());
-        statusPanel.add(new JScrollPane(statusTable), BorderLayout.CENTER);
+        // Create
 
-        // Set the preferred size of the panel
-        statusPanel.setPreferredSize(new Dimension(300, 500));
-
-        // Set the content pane of the dialog
-        setContentPane(statusPanel);
         pack();
     }
 }
