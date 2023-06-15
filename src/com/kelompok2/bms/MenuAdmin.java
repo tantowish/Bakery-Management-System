@@ -63,6 +63,14 @@ public class MenuAdmin extends JDialog{
                 messagePage.setVisible(true);
             }
         });
+        laporanMingguanButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+                ReportPage reportPage = new ReportPage(loginPage,id);
+                reportPage.setVisible(true);
+            }
+        });
     }
 
 

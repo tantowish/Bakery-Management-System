@@ -14,7 +14,7 @@ public class MenuUser extends JDialog{
 
     public MenuUser(LoginPage loginPage, String id){
         super(loginPage);
-        setTitle("Menu Admin");
+        setTitle("Menu User");
         setContentPane(MenuUser);
         setMinimumSize(new Dimension(450, 500));
         setModal(true);

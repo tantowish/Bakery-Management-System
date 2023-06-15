@@ -302,4 +302,61 @@ public class Conn {
 
         return false;
     }
+
+    public static int getSelling(){
+        int total = 0;
+        try {
+            // Get the database connection from another class
+            Connection conn = Conn.getCon();
+
+            // Create a SQL statement with a parameterized query
+            String query = "select sum(amount) from orders where orderDate BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW();";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+
+            // Execute the query
+            ResultSet resultSet = pstmt.executeQuery();
+
+            // Check if a result was found
+            if (resultSet.next()) {
+                total = resultSet.getInt(1); // Use getInt() to retrieve the integer value
+            }
+
+            // Close the ResultSet and PreparedStatement
+            resultSet.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+    public static int getSold(){
+        int total = 0;
+        try {
+            // Get the database connection from another class
+            Connection conn = Conn.getCon();
+
+            // Create a SQL statement with a parameterized query
+            String query = "select sum(orderdetails.quantity) from orderdetails\n" +
+                    "JOIN orders\n" +
+                    "on orders.orderId = orderdetails.orderId\n" +
+                    "where orderDate BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW();";
+            PreparedStatement pstmt = conn.prepareStatement(query);
+
+            // Execute the query
+            ResultSet resultSet = pstmt.executeQuery();
+
+            // Check if a result was found
+            if (resultSet.next()) {
+                total = resultSet.getInt(1); // Use getInt() to retrieve the integer value
+            }
+
+            // Close the ResultSet and PreparedStatement
+            resultSet.close();
+            pstmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return total;
+    }
+
 }
