@@ -1,15 +1,28 @@
 package com.kelompok2.bms;
 
+import com.itextpdf.text.*;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.PdfPCell;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Locale;
 
 public class ReportPage extends JDialog{
     private JPanel reportPanel;
@@ -20,6 +33,7 @@ public class ReportPage extends JDialog{
     private JLabel date;
     private JLabel pendapatan;
     private JLabel terjual;
+    private DefaultTableModel tableModel,tableModel2;
 
     public ReportPage(LoginPage loginPage,String adminId) {
         super(loginPage);
@@ -35,7 +49,7 @@ public class ReportPage extends JDialog{
         LocalDate dateBefore7Days = currentDate.minusDays(7);
         date.setText(dateBefore7Days+" to "+currentDate);
 
-        DefaultTableModel tableModel = new DefaultTableModel();
+        tableModel = new DefaultTableModel();
         tableModel.setColumnIdentifiers(new Object[]{"customerId", "Name", "Total Order", "Total Amount"});
         try {
             Connection conn = Conn.getCon();
@@ -49,8 +63,8 @@ public class ReportPage extends JDialog{
             while (rs.next()) {
                 // Process the retrieved data
                 String id = rs.getString("id");
-                String total = rs.getString("total");
-                String order = rs.getString("count");
+                int total = rs.getInt("total");
+                int order = rs.getInt("count");
                 // Add a new row to the table model
                 tableModel.addRow(new Object[]{id, Conn.getNama(id), order, total});
             }
@@ -62,7 +76,7 @@ public class ReportPage extends JDialog{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        DefaultTableModel tableModel2 = new DefaultTableModel();
+        tableModel2 = new DefaultTableModel();
         tableModel2.setColumnIdentifiers(new Object[]{"productName", "Quantity", "Total Amount"});
         try {
             Connection conn = Conn.getCon();
@@ -76,8 +90,8 @@ public class ReportPage extends JDialog{
             while (rs.next()) {
                 // Process the retrieved data
                 String pname = rs.getString("productName");
-                String qty = rs.getString("quantity");
-                String total = rs.getString("amount");
+                int qty = rs.getInt("quantity");
+                int total = rs.getInt("amount");
                 // Add a new row to the table model
                 tableModel2.addRow(new Object[]{pname, qty, total});
             }
@@ -89,16 +103,168 @@ public class ReportPage extends JDialog{
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        pendapatan.setText("Total pendapatan : Rp"+Conn.getSelling());
+        NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+        format.setMaximumFractionDigits(0);
+        // Format the value as currency
+        String formattedValue = format.format(Conn.getSelling());
+        pendapatan.setText("Total pendapatan : "+formattedValue);
         terjual.setText("Produk terjual       : "+ Conn.getSold());
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dispose();
                 MenuAdmin menuAdmin = new MenuAdmin(loginPage,adminId);
-
+                menuAdmin.setVisible(true);
+            }
+        });
+        PDFButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                exportPdf();
             }
         });
     }
+
+    private void exportPdf() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save Report");
+        fileChooser.setSelectedFile(new File("report.pdf"));
+
+        int userSelection = fileChooser.showSaveDialog(this);
+
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File outputFile = fileChooser.getSelectedFile();
+
+            try {
+                DefaultTableModel model = (DefaultTableModel) table1.getModel();
+                DefaultTableModel model2 = (DefaultTableModel) table2.getModel();
+
+
+                // Insert data from table1
+                if (table1.getRowCount() > 0 && table2.getRowCount()>0) {
+
+                    Document document = new Document(PageSize.A4);
+                    PdfWriter.getInstance(document, new FileOutputStream(outputFile));
+                    document.open();
+                    Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20);
+                    Font secondaryFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 14);
+                    Font thirdFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 16);
+                    Paragraph title = new Paragraph("Weekly Report", titleFont);
+
+                    LocalDate currentDate = LocalDate.now();
+                    LocalDate dateBefore7Days = currentDate.minusDays(7);
+                    Paragraph date = new Paragraph(dateBefore7Days+" to "+currentDate,secondaryFont);
+
+                    date.setAlignment(Element.ALIGN_CENTER);
+                    title.setAlignment(Element.ALIGN_CENTER);
+
+                    document.add(title);
+                    document.add(date);
+
+                    Paragraph newLine = new Paragraph("\n",secondaryFont);
+                    document.add(newLine);
+
+                    NumberFormat format = NumberFormat.getCurrencyInstance(new Locale("id", "ID"));
+
+                    // Format the value as currency
+                    String formattedValue = format.format(Conn.getSelling());
+                    format.setMaximumFractionDigits(0);
+                    Paragraph pendapatan = new Paragraph("Total Pendapatan : "+formattedValue,secondaryFont);
+                    document.add(pendapatan);
+
+                    Paragraph terjual = new Paragraph("Produk terjual       : "+ Conn.getSold(),secondaryFont);
+                    document.add(terjual);
+
+                    PdfPTable table = new PdfPTable(4);
+                    table.setWidthPercentage(100);
+                    table.setSpacingBefore(10f);
+                    table.setSpacingAfter(10f);
+
+                    Paragraph customer = new Paragraph("Customer",thirdFont);
+                    customer.setAlignment(Element.ALIGN_CENTER);
+                    document.add(customer);
+                    document.add(newLine);
+
+                    // Add table headers
+                    String[] headers = {"customerId", "Name", "Total Order", "Total Amount"};
+                    for (String header : headers) {
+                        PdfPCell cell = new PdfPCell(new Phrase(header));
+                        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                        table.addCell(cell);
+                    }
+
+                    // Add table rows with ordered product details
+                    for (int row = 0; row < model.getRowCount(); row++) {
+                        String customerId = (String) model.getValueAt(row, 0);
+                        String name = (String) model.getValueAt(row, 1);
+                        int order = (int) model.getValueAt(row, 2);
+                        int amount = (int) model.getValueAt(row, 3);
+
+                        table.addCell(customerId);
+                        table.addCell(name);
+                        table.addCell(String.valueOf(order));
+                        table.addCell(String.valueOf(amount));
+                    }
+
+                    // Add the table to the document
+                    document.add(table);
+
+                    document.add(newLine);
+
+                    Paragraph product = new Paragraph("Product",thirdFont);
+                    product.setAlignment(Element.ALIGN_CENTER);
+                    document.add(product);
+
+
+                    PdfPTable table2 = new PdfPTable(3);
+                    table2.setWidthPercentage(100);
+                    table2.setSpacingBefore(10f);
+                    table2.setSpacingAfter(10f);
+
+                    // Add table headers
+                    String[] headers2 = {"productName", "Quantity", "Total Amount"};
+                    for (String header : headers2) {
+                        PdfPCell cell = new PdfPCell(new Phrase(header));
+                        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                        table2.addCell(cell);
+                    }
+
+                    // Add table rows with ordered product details
+                    for (int row = 0; row < model2.getRowCount(); row++) {
+                        String productName = (String) model2.getValueAt(row, 0);
+                        int qty = (int) model2.getValueAt(row, 1);
+                        int amount2 = (int) model2.getValueAt(row, 2);
+
+                        table2.addCell(productName);
+                        table2.addCell(String.valueOf(qty));
+                        table2.addCell(String.valueOf(amount2));
+                    }
+                    document.add(table2);
+
+                    document.add(newLine);
+                    Paragraph footer = new Paragraph();
+                    footer.setFont(secondaryFont);
+                    LocalDateTime dateTime = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    String formattedDateTime = dateTime.format(formatter);
+                    footer.add(formattedDateTime);
+                    footer.add("\n");
+                    footer.add("Kinan Bakery");
+                    footer.setAlignment(Element.ALIGN_CENTER);
+                    document.add(footer);
+
+                    // Add the table to the document
+
+                    document.close();
+                }
+
+                JOptionPane.showMessageDialog(null, "Report exported successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (DocumentException | FileNotFoundException e) {
+                JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
 }

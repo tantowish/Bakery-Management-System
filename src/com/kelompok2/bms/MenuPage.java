@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -349,90 +350,98 @@ public class MenuPage extends JDialog {
     }
 
     private void exportPdf(String id, String orderId) {
-        try {
-            DefaultTableModel model = (DefaultTableModel) table1.getModel();
-            if (model.getRowCount() > 0) {
-                // Create a PDF document
-                Document document = new Document();
-                PdfWriter.getInstance(document, new FileOutputStream("receipt.pdf"));
-                document.open();
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Save Receipt");
+        fileChooser.setSelectedFile(new File("receipt.pdf"));
 
-                // Add a title to the PDF
-                Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20);
-                Paragraph title = new Paragraph("Receipt", titleFont);
-                title.setAlignment(Element.ALIGN_CENTER);
-                document.add(title);
+        int userSelection = fileChooser.showSaveDialog(this);
 
-                Font info = FontFactory.getFont(FontFactory.HELVETICA, 16);
-                LocalDateTime dateTime = LocalDateTime.now();
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-                String formattedDateTime = dateTime.format(formatter);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File outputFile = fileChooser.getSelectedFile();
+            try {
+                DefaultTableModel model = (DefaultTableModel) table1.getModel();
+                if (model.getRowCount() > 0) {
+                    // Create a PDF document
+                    Document document = new Document();
+                    PdfWriter.getInstance(document, new FileOutputStream(outputFile));
+                    document.open();
 
-                Paragraph datettime = new Paragraph(formattedDateTime,info);
-                Paragraph customer_name = new Paragraph("Customer Name : "+Conn.getNama(id),info);
-                Paragraph order_id = new Paragraph("Order ID : "+orderId,info);
-                Paragraph status = new Paragraph("Status : paid",info);
-                datettime.setAlignment(Element.ALIGN_LEFT);
-                customer_name.setAlignment(Element.ALIGN_LEFT);
-                order_id.setAlignment(Element.ALIGN_LEFT);
-                status.setAlignment(Element.ALIGN_LEFT);
-                document.add(datettime);
-                document.add(customer_name);
-                document.add(order_id);
-                document.add(status);
+                    // Add a title to the PDF
+                    Font titleFont = FontFactory.getFont(FontFactory.HELVETICA_BOLD, 20);
+                    Paragraph title = new Paragraph("Receipt", titleFont);
+                    title.setAlignment(Element.ALIGN_CENTER);
+                    document.add(title);
+
+                    Font info = FontFactory.getFont(FontFactory.HELVETICA, 16);
+                    LocalDateTime dateTime = LocalDateTime.now();
+                    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                    String formattedDateTime = dateTime.format(formatter);
+
+                    Paragraph datettime = new Paragraph(formattedDateTime, info);
+                    Paragraph customer_name = new Paragraph("Customer Name : " + Conn.getNama(id), info);
+                    Paragraph order_id = new Paragraph("Order ID : " + orderId, info);
+                    Paragraph status = new Paragraph("Status : paid", info);
+                    datettime.setAlignment(Element.ALIGN_LEFT);
+                    customer_name.setAlignment(Element.ALIGN_LEFT);
+                    order_id.setAlignment(Element.ALIGN_LEFT);
+                    status.setAlignment(Element.ALIGN_LEFT);
+                    document.add(datettime);
+                    document.add(customer_name);
+                    document.add(order_id);
+                    document.add(status);
 
 
-                // Add a table to display the ordered products
-                PdfPTable table = new PdfPTable(4);
-                table.setWidthPercentage(100);
-                table.setSpacingBefore(10f);
-                table.setSpacingAfter(10f);
+                    // Add a table to display the ordered products
+                    PdfPTable table = new PdfPTable(4);
+                    table.setWidthPercentage(100);
+                    table.setSpacingBefore(10f);
+                    table.setSpacingAfter(10f);
 
-                // Add table headers
-                String[] headers = {"No", "Name", "Quantity", "Price"};
-                for (String header : headers) {
-                    PdfPCell cell = new PdfPCell(new Phrase(header));
-                    cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-                    cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
-                    table.addCell(cell);
+                    // Add table headers
+                    String[] headers = {"No", "Name", "Quantity", "Price"};
+                    for (String header : headers) {
+                        PdfPCell cell = new PdfPCell(new Phrase(header));
+                        cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                        table.addCell(cell);
+                    }
+
+                    // Add table rows with ordered product details
+                    for (int row = 0; row < model.getRowCount(); row++) {
+                        int no = (int) model.getValueAt(row, 0);
+                        String name = (String) model.getValueAt(row, 1);
+                        int quantity = (int) model.getValueAt(row, 2);
+                        int price = (int) model.getValueAt(row, 3);
+
+                        table.addCell(String.valueOf(no));
+                        table.addCell(name);
+                        table.addCell(String.valueOf(quantity));
+                        table.addCell(String.valueOf(price));
+                    }
+
+                    // Add the table to the document
+                    document.add(table);
+
+                    Paragraph paid = new Paragraph("Total : " + total, info);
+                    paid.setAlignment(Element.ALIGN_LEFT);
+                    document.add(paid);
+
+                    Paragraph footer = new Paragraph("~Thank You~ ", titleFont);
+                    footer.setAlignment(Element.ALIGN_CENTER);
+                    document.add(footer);
+
+
+                    // Close the document
+                    document.close();
+
+                    JOptionPane.showMessageDialog(null, "Receipt exported successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Please add the products", "Error", JOptionPane.ERROR_MESSAGE);
                 }
 
-                // Add table rows with ordered product details
-                for (int row = 0; row < model.getRowCount(); row++) {
-                    int no = (int) model.getValueAt(row, 0);
-                    String name = (String) model.getValueAt(row, 1);
-                    int quantity = (int) model.getValueAt(row, 2);
-                    int price = (int) model.getValueAt(row, 3);
-
-                    table.addCell(String.valueOf(no));
-                    table.addCell(name);
-                    table.addCell(String.valueOf(quantity));
-                    table.addCell(String.valueOf(price));
-                }
-
-
-
-                // Add the table to the document
-                document.add(table);
-
-                Paragraph paid = new Paragraph("Total : "+total, info);
-                paid.setAlignment(Element.ALIGN_LEFT);
-                document.add(paid);
-
-                Paragraph footer = new Paragraph("~Thank You~ ", titleFont);
-                footer.setAlignment(Element.ALIGN_CENTER);
-                document.add(footer);
-
-
-                // Close the document
-                document.close();
-
-                JOptionPane.showMessageDialog(null, "Receipt exported successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "Please add the products", "Error", JOptionPane.ERROR_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
