@@ -128,12 +128,16 @@ public class ReportPage extends JDialog{
     private void exportPdf() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Save Report");
-        fileChooser.setSelectedFile(new File("report.pdf"));
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDateTime2 = dateTime.format(formatter2);
+        fileChooser.setSelectedFile(new File(formattedDateTime2+" Report.pdf"));
 
         int userSelection = fileChooser.showSaveDialog(this);
 
         if (userSelection == JFileChooser.APPROVE_OPTION) {
             File outputFile = fileChooser.getSelectedFile();
+
 
             try {
                 DefaultTableModel model = (DefaultTableModel) table1.getModel();
@@ -142,7 +146,6 @@ public class ReportPage extends JDialog{
 
                 // Insert data from table1
                 if (table1.getRowCount() > 0 && table2.getRowCount()>0) {
-
                     Document document = new Document(PageSize.A4);
                     PdfWriter.getInstance(document, new FileOutputStream(outputFile));
                     document.open();
@@ -172,8 +175,10 @@ public class ReportPage extends JDialog{
                     Paragraph pendapatan = new Paragraph("Total Pendapatan : "+formattedValue,secondaryFont);
                     document.add(pendapatan);
 
-                    Paragraph terjual = new Paragraph("Produk terjual       : "+ Conn.getSold(),secondaryFont);
+                    Paragraph terjual = new Paragraph("Produk Terjual       : "+ Conn.getSold(),secondaryFont);
                     document.add(terjual);
+                    document.add(newLine);
+
 
                     PdfPTable table = new PdfPTable(4);
                     table.setWidthPercentage(100);
@@ -183,7 +188,6 @@ public class ReportPage extends JDialog{
                     Paragraph customer = new Paragraph("Customer",thirdFont);
                     customer.setAlignment(Element.ALIGN_CENTER);
                     document.add(customer);
-                    document.add(newLine);
 
                     // Add table headers
                     String[] headers = {"customerId", "Name", "Total Order", "Total Amount"};
@@ -246,7 +250,7 @@ public class ReportPage extends JDialog{
                     document.add(newLine);
                     Paragraph footer = new Paragraph();
                     footer.setFont(secondaryFont);
-                    LocalDateTime dateTime = LocalDateTime.now();
+
                     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                     String formattedDateTime = dateTime.format(formatter);
                     footer.add(formattedDateTime);

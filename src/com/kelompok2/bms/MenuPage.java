@@ -352,7 +352,7 @@ public class MenuPage extends JDialog {
     private void exportPdf(String id, String orderId) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Save Receipt");
-        fileChooser.setSelectedFile(new File("receipt.pdf"));
+        fileChooser.setSelectedFile(new File(orderId+"-receipt.pdf"));
 
         int userSelection = fileChooser.showSaveDialog(this);
 
