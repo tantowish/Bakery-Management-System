@@ -33,7 +33,7 @@ public class LoginPage extends JDialog{
                 }
                 else{
                     if(Conn.checkUser(username,password)){
-                        if( Conn.checkType(Conn.getId(username)).equals("admin")){
+                        if(Conn.checkType(Conn.getId(username)).equals("admin")){
                             JOptionPane.showMessageDialog(rootPane,"Berhasil login sebagai admin","Logged",1);
                             dispose();
                             String id = Conn.getId(username);

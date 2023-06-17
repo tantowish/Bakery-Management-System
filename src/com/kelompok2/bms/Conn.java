@@ -1,10 +1,11 @@
 package com.kelompok2.bms;
 
+
 import java.sql.*;
 
 public class Conn {
     static Connection con;
-    public static  Connection getCon(){
+    public static Connection getCon(){
         try{
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/bms_db","root","");
@@ -42,6 +43,7 @@ public class Conn {
         }
         return id;
     }
+
     public static void selectUsers() {
         try {
             Connection connection = getCon();
@@ -133,6 +135,8 @@ public class Conn {
 
         return fullName;
     }
+
+
 
     public static String getUsername(String id){
         String username="";

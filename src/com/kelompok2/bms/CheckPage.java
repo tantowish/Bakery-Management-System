@@ -14,7 +14,7 @@ public class CheckPage extends JDialog{
     private JPanel checkPanel;
     private JLabel status;
 
-    public CheckPage(LoginPage loginPage, String orderId,String date,int amount,String status,String customerId){
+    public CheckPage(LoginPage loginPage, String orderId,String date,int amount,String status,String username){
         super(loginPage);
         setTitle("Register");
         setContentPane(checkPanel);
@@ -28,7 +28,7 @@ public class CheckPage extends JDialog{
         this.date.setText("Date : "+date);
         this.amount.setText("Amount : "+amount);
         this.status.setText("Status : "+status);
-        customer.setText("Customer : "+Conn.getNama(customerId));
+        customer.setText("Customer : "+Conn.getNama(Conn.getId(username)));
 
         try {
             Connection conn = Conn.getCon();

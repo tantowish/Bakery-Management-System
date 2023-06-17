@@ -42,7 +42,7 @@ public class OrderPage extends JDialog {
 //            e.printStackTrace();
 //        }
         tableModel = new DefaultTableModel();
-        tableModel.setColumnIdentifiers(new Object[]{"orderId", "orderDate", "amount", "status", "customerId"});
+        tableModel.setColumnIdentifiers(new Object[]{"Name", "orderId", "orderDate", "Amount", "Status"});
         loadTable(tableModel);
 
         backButton.addActionListener(new ActionListener() {
@@ -78,7 +78,7 @@ public class OrderPage extends JDialog {
                     if (selectedRows.length > 0) {
                         for (int row : selectedRows) {
                             // Get the orderId from the selected row
-                            String orderId = table1.getValueAt(row, 0).toString();
+                            String orderId = table1.getValueAt(row, 1).toString();
 
                             // Update the status in the database
                             updateOrderStatus(orderId, selectedStatus);
@@ -99,13 +99,14 @@ public class OrderPage extends JDialog {
                 int selectedRow = table1.getSelectedRow();
 
                 if (selectedRow != -1) { // Check if a row is selected
-                    String customerId = table1.getValueAt(selectedRow, 4).toString();
-                    String orderId = table1.getValueAt(selectedRow, 0).toString();
-                    String date = table1.getValueAt(selectedRow, 1).toString();
-                    String amount_value = (String) table1.getValueAt(selectedRow, 2);
+                    String username = table1.getValueAt(selectedRow, 0).toString();
+                    String orderId = table1.getValueAt(selectedRow, 1).toString();
+                    String date = table1.getValueAt(selectedRow, 2).toString();
+                    String amount_value = (String) table1.getValueAt(selectedRow, 3);
                     int amount = Integer.parseInt(amount_value);
-                    String status = table1.getValueAt(selectedRow, 3).toString();
-                    CheckPage checkPage = new CheckPage(loginPage,orderId,date,amount,status,customerId);
+                    String status = table1.getValueAt(selectedRow, 4).toString();
+
+                    CheckPage checkPage = new CheckPage(loginPage,orderId,date,amount,status,username);
                     checkPage.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(OrderPage.this, "Please select rows to update.", "No Rows Selected", JOptionPane.WARNING_MESSAGE);
@@ -161,10 +162,11 @@ public class OrderPage extends JDialog {
                 String amount = rs.getString("amount");
                 String status = rs.getString("status");
                 String custId = rs.getString("customerId");
+                String nama = Conn.getUsername(custId);
                 // Retrieve other columns as needed
 
                 // Add a new row to the table model
-                tableModel.addRow(new Object[]{id, date, amount, status, custId});
+                tableModel.addRow(new Object[]{nama, id, date, amount, status});
             }
             table1.setModel(tableModel);
 
