@@ -61,10 +61,11 @@ public class MessagePage extends JDialog{
         tableModel.addColumn("Sender");
         tableModel.addColumn("Username");
         tableModel.addColumn("Unread"); // Add the Unread Count column
+        tableModel.addColumn("Time");
 
         try {
             Connection conn = Conn.getCon();
-            String selectChatSQL = "SELECT sender, SUM(CASE WHEN read_status = 0 THEN 1 ELSE 0 END) AS unread_count FROM chat WHERE receiver = ? OR receiver LIKE 'A%' GROUP BY sender ORDER BY unread_count desc";
+            String selectChatSQL = "SELECT max(timestamp) as timestamp, sender, SUM(CASE WHEN read_status = 0 THEN 1 ELSE 0 END) AS unread_count FROM chat WHERE receiver = ? OR receiver LIKE 'A%' GROUP BY sender ORDER BY timestamp desc";
             PreparedStatement preparedStatement = conn.prepareStatement(selectChatSQL);
             preparedStatement.setString(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -72,6 +73,7 @@ public class MessagePage extends JDialog{
             while (resultSet.next()) {
                 String sender = resultSet.getString("sender");
                 int unreadCount = resultSet.getInt("unread_count");
+                String time = resultSet.getString("timestamp");
                 tableModel.addRow(new Object[]{Conn.getNama(sender), Conn.getUsername(sender), unreadCount});
             }
 
