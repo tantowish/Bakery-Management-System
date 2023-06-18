@@ -28,9 +28,10 @@ public class StatusPage extends JDialog{
 
         try {
             // Create a SQL statement
-            String query = "SELECT * FROM orders WHERE customerId = ? AND (orderDate BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW() AND status<>'done') ORDER BY status";
+            String query = "SELECT * FROM orders WHERE (customerId = ? AND ((orderDate BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW()) AND status='done')) OR (customerId = ? AND status<>'done') ORDER BY orderDate desc";
             PreparedStatement statement = conn.prepareStatement(query);
             statement.setString(1, id);
+            statement.setString(2, id);
 
             // Execute the query and get the result set
             ResultSet resultSet = statement.executeQuery();

@@ -25,13 +25,18 @@ public class FeedbackPage extends BasePage {
         setLocationRelativeTo(loginPage);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         loginPage.setResizable(false);
+        setResizable(false);
+        inputSuggest.setLineWrap(true);
+        inputSuggest.setWrapStyleWord(true);
         submitButton.addActionListener(new ActionListener() {
-                                           @Override
-                                           public void actionPerformed(ActionEvent e) {
-                                               String message = inputSuggest.getText();
-                                               submitFeedback(id, message);
-                                           }
-                                       }
+           @Override
+           public void actionPerformed(ActionEvent e) {
+               String message = inputSuggest.getText();
+               submitFeedback(id, message);
+               JOptionPane.showMessageDialog(null, "Thanks for the feedback ;)");
+               dispose();
+           }
+       }
         );
     }
 
