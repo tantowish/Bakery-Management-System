@@ -20,7 +20,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
 
-public class MenuPage extends JDialog {
+public class MenuPage extends BasePage {
     private JTable table1;
     private JSpinner spinner1;
     private JSpinner spinner2;
@@ -40,6 +40,7 @@ public class MenuPage extends JDialog {
     private JButton statusButton;
     private JButton logoutButton;
     private JScrollPane spane;
+    private JLabel timeTable;
     private static int tableCounter = 1;
     private static int total;
     private Menu daftar[] = new Menu[8];
@@ -61,6 +62,9 @@ public class MenuPage extends JDialog {
 
         loadMenu();
         spane.setBackground(new Color(238, 225, 186));
+
+        // memperbarui waktu
+        super.updateTimeLabel(timeTable);
 
         addButton.addActionListener(new ActionListener() {
             @Override

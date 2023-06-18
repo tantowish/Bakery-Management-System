@@ -5,13 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuAdmin extends JDialog{
+public class MenuAdmin extends BasePage{
     private JButton restockButton;
     private JButton antrianPesananButton;
     private JButton laporanMingguanButton;
     private JPanel MenuAdmin;
     private JButton backButton;
     private JButton chatCustomerButton;
+    private JLabel timeLabel;
 
     public MenuAdmin(LoginPage loginPage, String id) {
         super(loginPage);
@@ -22,6 +23,9 @@ public class MenuAdmin extends JDialog{
         setLocationRelativeTo(loginPage);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         loginPage.setResizable(false);
+
+        // memperbarui waktu
+        super.updateTimeLabel(timeLabel);
 //        restockButton.addActionListener(new ActionListener() {
 //
 //            @Override

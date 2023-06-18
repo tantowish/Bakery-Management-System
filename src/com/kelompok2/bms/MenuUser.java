@@ -5,12 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MenuUser extends JDialog{
+public class MenuUser extends BasePage{
 
     private JButton orderButton;
     private JButton chatAdminButton;
     private JButton backButton;
     private JPanel MenuUser;
+    private JLabel timeLabel;
+    private JButton feedbackButton;
 
     public MenuUser(LoginPage loginPage, String id){
         super(loginPage);
@@ -21,6 +23,9 @@ public class MenuUser extends JDialog{
         setLocationRelativeTo(loginPage);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         loginPage.setResizable(false);
+
+        // memperbarui waktu
+        super.updateTimeLabel(timeLabel);
         orderButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,6 +47,13 @@ public class MenuUser extends JDialog{
                 dispose();
                 LoginPage loginPage1 = new LoginPage(loginPage);
                 loginPage1.setVisible(true);
+            }
+        });
+        feedbackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FeedbackPage feedbackPage = new FeedbackPage(loginPage,id);
+                feedbackPage.setVisible(true);
             }
         });
     }
