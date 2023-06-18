@@ -259,7 +259,52 @@ public class ReportPage extends JDialog{
                     footer.setAlignment(Element.ALIGN_CENTER);
                     document.add(footer);
 
-                    // Add the table to the document
+                    document.newPage();
+                    try (Connection connection = Conn.getCon();
+                         Statement statement = connection.createStatement();
+                         ResultSet resultSet = statement.executeQuery("SELECT sender, message, subject FROM feedback WHERE timestamp BETWEEN DATE_SUB(NOW(), INTERVAL 7 DAY) AND NOW() GROUP BY timestamp")) {
+
+                        // Create the feedback table
+                        PdfPTable feedbackTable = new PdfPTable(3);
+                        feedbackTable.setWidthPercentage(100);
+                        feedbackTable.setSpacingBefore(10f);
+                        feedbackTable.setSpacingAfter(10f);
+
+                        Paragraph feedbackHeader = new Paragraph("Feedback", thirdFont);
+                        feedbackHeader.setAlignment(Element.ALIGN_CENTER);
+                        document.add(feedbackHeader);
+
+                        // Add feedback table headers
+                        String[] feedbackHeaders = {"Sender","Type", "Message"};
+                        float[] columnWidths = {1f, 1f, 2f}; // Adjust the widths here (e.g., 1f for sender, 2f for message)
+                        feedbackTable.setWidths(columnWidths);
+                        for (String header : feedbackHeaders) {
+                            PdfPCell cell = new PdfPCell(new Phrase(header));
+                            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+                            cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
+                            feedbackTable.addCell(cell);
+                        }
+
+                        // Add feedback table rows
+                        while (resultSet.next()) {
+                            String sender = resultSet.getString("sender");
+                            String type = resultSet.getString("subject");
+                            String nama_sender = Conn.getNama(sender);
+                            String message = resultSet.getString("message");
+
+                            feedbackTable.addCell(nama_sender);
+                            feedbackTable.addCell(type);
+                            feedbackTable.addCell(message);
+                        }
+
+                        // Add the feedback table to the document
+                        document.add(feedbackTable);
+                    } catch (SQLException e) {
+                        JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+                    document.add(newLine);
+                    document.add(footer);
+
 
                     document.close();
                 }
