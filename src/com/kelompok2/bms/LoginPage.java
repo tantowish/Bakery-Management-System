@@ -33,7 +33,7 @@ public class LoginPage extends BasePage{
                 String username = textField1.getText();
                 String password = passwordField1.getText();
                 if(username.isEmpty() || password.isEmpty()){
-                    JOptionPane.showMessageDialog(rootPane,"Some Fields Are Empty","Erorr",1);
+                    JOptionPane.showMessageDialog(rootPane,"Some Fields Are Empty","Error",1);
                 }
                 else{
                     if(Conn.checkUser(username,password)){

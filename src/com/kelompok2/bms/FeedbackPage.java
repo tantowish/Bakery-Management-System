@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
-public class FeedbackPage extends BasePage{
+public class FeedbackPage extends BasePage {
     private JPanel FeedbackPage;
     private JButton submitButton;
     private JTextArea inputSuggest;
@@ -26,16 +26,21 @@ public class FeedbackPage extends BasePage{
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         loginPage.setResizable(false);
         submitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String message = inputSuggest.getText();
-                    submitFeedback(id, message);
-                }
-            }
+                                           @Override
+                                           public void actionPerformed(ActionEvent e) {
+                                               String message = inputSuggest.getText();
+                                               submitFeedback(id, message);
+                                           }
+                                       }
         );
-    };
+    }
 
-        private void submitFeedback(String sender, String message) {
+    ;
+
+    private void submitFeedback(String sender, String message) {
+        if (message.isEmpty()) {
+            JOptionPane.showMessageDialog(rootPane, "Some Fields Are Empty", "Error", 1);
+        } else {
             try {
                 // Prepare the insert statement
                 Connection conn = Conn.getCon();
@@ -53,9 +58,13 @@ public class FeedbackPage extends BasePage{
                 preparedStatement.executeUpdate();
                 preparedStatement.close();
 
+                JOptionPane.showMessageDialog(rootPane,"Feedback has been sent. Thank you!","successfully ",1);
+                dispose();
+
                 System.out.println("Feedback has been saved in database.");
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
     }
+}
