@@ -6,13 +6,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginPage extends JDialog{
+public class LoginPage extends BasePage{
     private JTextField textField1;
     private JPasswordField passwordField1;
     private JComboBox comboBox1;
     private JButton loginButton;
     private JButton registerButton;
     private JPanel loginPanel;
+    private JLabel timeLabel;
 
     public LoginPage(LoginPage parent){
         super(parent);
@@ -23,6 +24,9 @@ public class LoginPage extends JDialog{
         setLocationRelativeTo(parent);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
+
+        // memperbarui waktu
+        super.updateTimeLabel(timeLabel);
         loginButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -34,14 +38,14 @@ public class LoginPage extends JDialog{
                 else{
                     if(Conn.checkUser(username,password)){
                         if(Conn.checkType(Conn.getId(username)).equals("admin")){
-                            JOptionPane.showMessageDialog(rootPane,"Berhasil login sebagai admin","Logged",1);
+                            JOptionPane.showMessageDialog(rootPane,"Successfully logged in as admin","Logged",1);
                             dispose();
                             String id = Conn.getId(username);
                             MenuAdmin menuPageAdmin = new MenuAdmin(LoginPage.this,id);
                             menuPageAdmin.setVisible(true);
                         }
                         else{
-                            JOptionPane.showMessageDialog(rootPane,"Berhasil login sebagai customer","Logged",1);
+                            JOptionPane.showMessageDialog(rootPane,"Successfully logged in as cusotmer","Logged",1);
                             dispose();
                             String id = Conn.getId(username);
                             MenuUser menuUser = new MenuUser(LoginPage.this,id);
@@ -63,6 +67,8 @@ public class LoginPage extends JDialog{
             }
         });
     }
+
+
 
     public static void main(String[] args) {
         LoginPage loginPage = new LoginPage(null);
