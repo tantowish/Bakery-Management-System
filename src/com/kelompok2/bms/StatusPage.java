@@ -14,7 +14,7 @@ public class StatusPage extends JDialog{
         setTitle("Order Table");
         setModal(true);
         setContentPane(statusPanel);
-        setMinimumSize(new Dimension(300, 400));
+        setMinimumSize(new Dimension(400, 400));
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setLocationRelativeTo(loginPage);

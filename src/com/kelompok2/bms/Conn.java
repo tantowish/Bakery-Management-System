@@ -74,6 +74,36 @@ public class Conn {
             System.out.println("" + ex);
         }
     }
+
+        public static boolean checkUser(String id) {
+            try {
+                Connection connection = getCon();
+                if (connection != null) {
+                    String query = "SELECT * FROM account WHERE id = ?";
+                    PreparedStatement statement = connection.prepareStatement(query);
+                    statement.setString(1, id);
+                    ResultSet resultSet = statement.executeQuery();
+
+                    // Check if a user with the given username and password exists
+                    boolean userExists = resultSet.next();
+
+                    // Close resources
+                    resultSet.close();
+                    statement.close();
+                    connection.close();
+
+                    return userExists;
+                } else {
+                    System.out.println("Failed to establish a database connection.");
+                }
+            } catch (Exception ex) {
+                System.out.println("" + ex);
+            }
+
+            return false;
+        }
+
+
     public static boolean checkUser(String username, String password) {
         try {
             Connection connection = getCon();
@@ -99,7 +129,6 @@ public class Conn {
         } catch (Exception ex) {
             System.out.println("" + ex);
         }
-
         return false;
     }
     public static String getNama(String id){

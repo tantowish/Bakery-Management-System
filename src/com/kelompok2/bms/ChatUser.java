@@ -22,6 +22,8 @@ public class ChatUser extends JDialog {
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
         loadMsg(id);
+        textArea1.setLineWrap(true);
+        textArea1.setWrapStyleWord(true);
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

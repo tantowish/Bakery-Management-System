@@ -276,7 +276,7 @@
         <properties>
           <background color="-7778753"/>
           <foreground color="-1121862"/>
-          <text value="Receipt"/>
+          <text value="Place Order"/>
         </properties>
       </component>
       <component id="5fc91" class="javax.swing.JLabel" binding="totalLabel">

@@ -23,6 +23,8 @@ public class ChatAdmin extends JDialog{
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         setResizable(false);
         loadMsg(id,receiver);
+        textArea1.setLineWrap(true);
+        textArea1.setWrapStyleWord(true);
         sendButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
